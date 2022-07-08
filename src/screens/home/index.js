@@ -19,25 +19,35 @@ export default function Home() {
   const [img, setImg] = React.useState();
   const [caption, setCaption] = React.useState('');
   let inputRef = React.useRef();
+
+  const submitText = () => {
+    inputRef.current.blur();
+  };
+
+  const makeMeme = () => {
+    setCaption('');
+    setImg(null);
+    inputRef.current.clear();
+    navigation.navigate(routes.memeGenerator, {img, caption});
+  };
+
   return (
     <View style={styles.container}>
-      <TextInput
-        ref={inputRef}
-        placeholder="Write something funny..."
-        placeholderTextColor={colors.red}
-        style={styles.textInput}
-        multiline={true}
-        onChangeText={text => setCaption(text)}
-      />
-      {caption.trim().length > 0 && (
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            inputRef.current.blur();
-          }}>
-          <Text style={styles.buttonText}>{'Submit text'}</Text>
-        </TouchableOpacity>
-      )}
+      <View style={styles.inputContainer}>
+        <TextInput
+          ref={inputRef}
+          placeholder="Write something funny..."
+          placeholderTextColor={colors.red}
+          style={styles.textInput}
+          multiline={true}
+          onChangeText={text => setCaption(text)}
+        />
+        {caption.trim().length > 0 && inputRef.current.isFocused() && (
+          <Text onPress={submitText} style={styles.buttonText}>
+            {'Done'}
+          </Text>
+        )}
+      </View>
 
       <TouchableOpacity
         activeOpacity={0.8}
@@ -51,11 +61,7 @@ export default function Home() {
           </View>
         )}
       </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() =>
-          navigation.navigate(routes.memeGenerator, {img, caption})
-        }>
+      <TouchableOpacity activeOpacity={0.8} onPress={makeMeme}>
         <Image source={localImages.logo} style={styles.logo} />
       </TouchableOpacity>
     </View>
@@ -119,9 +125,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buttonText: {
-    color: colors.black,
-    fontSize: 16,
+    color: colors.red,
+    fontSize: 12,
     fontWeight: 'bold',
-    letterSpacing: 0.6,
+    position: 'absolute',
+    bottom: 16,
+    right: 12,
   },
 });
