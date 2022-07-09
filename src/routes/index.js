@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import Home from '../screens/home';
 import routes from './routeNames';
 import MemeGenerator from '../screens/memeGenerator';
+import SplashScreen from '../screens/splashScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +16,7 @@ export default function Routes() {
         screenOptions={{
           headerShown: false,
         }}>
+        <Stack.Screen name={routes.splashScreen} component={SplashScreen} />
         <Stack.Screen name={routes.home} component={Home} />
         <Stack.Screen name={routes.memeGenerator} component={MemeGenerator} />
       </Stack.Navigator>
