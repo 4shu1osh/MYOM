@@ -1,5 +1,5 @@
 import ViewShot from 'react-native-view-shot';
-import {Text, View, StyleSheet, Image, ImageBackground, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, Image, ImageBackground, Alert} from 'react-native';
 import React from 'react';
 import colors from '../../utils/colors';
 import localImages from '../../utils/localImages';
@@ -8,7 +8,6 @@ import response from '../../utils/response';
 import CameraRoll from '@react-native-community/cameraroll';
 import Share from 'react-native-share';
 import { useNavigation } from '@react-navigation/native';
-import routes from '../../routes/routeNames';
 
 export default function MemeGenerator({route}) {
   const {img, caption} = route.params;
@@ -55,6 +54,7 @@ export default function MemeGenerator({route}) {
     viewShotRef.current.capture().then(uri => {
       CameraRoll.save(uri, {type: 'photo', album: 'Meme Generator'});
     });
+    Alert.alert('Wohoo!', 'Meme saved to your gallery');
   };
 
   return (

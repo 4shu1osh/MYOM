@@ -12,7 +12,7 @@ const navigation = useNavigation();
       index: 0,
       routes: [{name: routes.home}],
     });
-  }, 500);
+  }, 1000);
   return (
     <View style={StyleSheet.container}>
       <ImageBackground
